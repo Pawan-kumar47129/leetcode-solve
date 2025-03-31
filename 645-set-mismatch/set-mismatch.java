@@ -1,4 +1,5 @@
-class Solution {
+//Using List TC=O(N) SC=O(N)
+/*class Solution {
     public int[] findErrorNums(int[] nums) {
         int n=nums.length;
         List<Integer>list=new ArrayList<>(n+1);
@@ -10,6 +11,32 @@ class Solution {
         for(int i=1;i<=n;i++){
             if(list.get(i)==2) duplicate=i;
             if(list.get(i)==0) missing=i;
+        }
+        return new int[]{duplicate,missing};
+    }
+}*/
+
+//using Set TC=O(n) SC=O(n)
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        int n=nums.length;
+        HashSet<Integer>set=new HashSet<>(n);
+        int setSum=0;
+        int duplicate=-1;
+        for(int i=0;i<n;i++){
+            if(!set.contains(nums[i])){
+                set.add(nums[i]);
+                setSum+=nums[i];
+            }else{
+                duplicate=nums[i];
+            }
+        }
+        int missing=-1;
+        for(int i=1;i<=n;i++){
+            if(!set.contains(i)){
+                missing=i;
+                break;
+            }
         }
         return new int[]{duplicate,missing};
     }
