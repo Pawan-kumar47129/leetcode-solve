@@ -17,7 +17,7 @@
 }*/
 
 //using Set TC=O(n) SC=O(n)
-class Solution {
+/*class Solution {
     public int[] findErrorNums(int[] nums) {
         int n=nums.length;
         HashSet<Integer>set=new HashSet<>(n);
@@ -37,6 +37,24 @@ class Solution {
                 missing=i;
                 break;
             }
+        }
+        return new int[]{duplicate,missing};
+    }
+}*/
+
+//Using HashMap
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        int n=nums.length;
+        int duplicate=-1,missing=-1;
+        HashMap<Integer,Integer>map=new HashMap<>(n);
+        for(int i=0;i<n;i++){
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        }
+        for(int i=1;i<=n;i++){
+            int count=map.getOrDefault(i,0);
+            if(count==0) missing=i;
+            if(count==2) duplicate=i;
         }
         return new int[]{duplicate,missing};
     }
