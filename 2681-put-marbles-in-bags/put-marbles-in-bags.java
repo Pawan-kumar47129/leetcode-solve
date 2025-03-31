@@ -34,20 +34,24 @@ class Solution {
 }*/
 
 class Solution {
+
     public long putMarbles(int[] weights, int k) {
-        int n=weights.length;
-        int m=n-1;
-        long[]pairSum=new long[m];
-        for(int i=0;i<m;i++){
-            pairSum[i]=weights[i]+weights[i+1];
+        // We collect and sort the value of all n - 1 pairs.
+        int n = weights.length;
+        int[] pairWeights = new int[n - 1];
+        for (int i = 0; i < n - 1; ++i) {
+            pairWeights[i] = weights[i] + weights[i + 1];
         }
-        Arrays.sort(pairSum);
-        long minCost=0;
-        long maxCost=0;
-        for(int i=0;i<k-1;i++){
-            minCost+=pairSum[i];
-            maxCost+=pairSum[m-1-i];
+        // We will sort only the first (n - 1) elements of the array.
+        Arrays.sort(pairWeights, 0, n - 1);
+
+        // Get the difference between the largest k - 1 values and the
+        // smallest k - 1 values.
+        long answer = 0l;
+        for (int i = 0; i < k - 1; ++i) {
+            answer += pairWeights[n - 2 - i] - pairWeights[i];
         }
-        return maxCost-minCost;
+
+        return answer;
     }
 }
