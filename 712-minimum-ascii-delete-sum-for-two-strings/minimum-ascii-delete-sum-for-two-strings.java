@@ -26,7 +26,8 @@
     }
 }*/
 
-class Solution {
+//Tabulation TC=O(n*m) Sc=O(n*m)+O(n+m)
+/*class Solution {
     public int minimumDeleteSum(String s1, String s2) {
         int n=s1.length();
         int m=s2.length();
@@ -41,6 +42,35 @@ class Solution {
             }
         }
         long lcsSum=dp[n][m];
+        long allCharASCII=0;
+        for(int i=0;i<n;i++){
+            allCharASCII+=s1.charAt(i);
+        }
+        for(int i=0;i<m;i++){
+            allCharASCII+=s2.charAt(i);
+        }
+        return (int)(allCharASCII-lcsSum*2);  
+    }
+}*/
+
+//Space optimization O(n*m) Sc=O(m)
+class Solution {
+    public int minimumDeleteSum(String s1, String s2) {
+        int n=s1.length();
+        int m=s2.length();
+        long[]dp=new long[m+1];
+        for(int i=1;i<=n;i++){
+            long curr[]=new long[m+1];
+            for(int j=1;j<=m;j++){
+                if(s1.charAt(i-1)==s2.charAt(j-1)){
+                    curr[j]=dp[j-1]+s1.charAt(i-1);
+                }else{
+                    curr[j]=Math.max(dp[j],curr[j-1]);
+                }
+            }
+            dp=curr;
+        }
+        long lcsSum=dp[m];
         long allCharASCII=0;
         for(int i=0;i<n;i++){
             allCharASCII+=s1.charAt(i);
