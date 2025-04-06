@@ -14,25 +14,34 @@
  * }
  */
 class Solution {
-
-    public TreeNode lcaDeepestLeaves(TreeNode root) {
-        return dfs(root).getKey();
+    class Tuple{
+        int depth;
+        public TreeNode lca;
+        Tuple(int h,TreeNode l){
+            depth=h;
+            lca=l;
+        }
     }
 
-    private Pair<TreeNode, Integer> dfs(TreeNode root) {
-        if (root == null) {
-            return new Pair<>(null, 0);
+    private Tuple solve(TreeNode root){
+        if(root==null) return new Tuple(0,null);
+        Tuple left=solve(root.left);
+        Tuple right=solve(root.right);
+        //both side same depth so root become lca
+        if(left.depth==right.depth){
+            left.depth+=1;
+            left.lca=root;
+            return  left;
+        }else if(left.depth>right.depth){
+            left.depth+=1;
+            return left;
+        }else {
+            right.depth+=1;
+            return right;
         }
-
-        Pair<TreeNode, Integer> left = dfs(root.left);
-        Pair<TreeNode, Integer> right = dfs(root.right);
-
-        if (left.getValue() > right.getValue()) {
-            return new Pair<>(left.getKey(), left.getValue() + 1);
-        }
-        if (left.getValue() < right.getValue()) {
-            return new Pair<>(right.getKey(), right.getValue() + 1);
-        }
-        return new Pair<>(root, left.getValue() + 1);
+    }
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        Tuple ans=solve(root);
+        return ans.lca;
     }
 }
