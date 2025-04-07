@@ -28,7 +28,8 @@ class Solution {
     }
 }*/
 
-class Solution {
+//Tabulation
+/*class Solution {
     public boolean canPartition(int[] nums) {
         int sum=0;
         int n=nums.length;
@@ -52,6 +53,37 @@ class Solution {
             }
         }
         return dp[n-1][target];
+
+    }
+}*/
+
+//Space optimization
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int sum=0;
+        int n=nums.length;
+        for(int ele:nums){
+            sum+=ele;
+        }
+        if(sum%2!=0) return false;
+        int target=sum/2;
+        boolean[]dp=new boolean[target+1];
+        if(nums[0]<=target)dp[nums[0]]=true;
+        for(int i=1;i<n;i++){
+            boolean[]curr=new boolean[target+1];
+            for(int t=0;t<=target;t++){
+                //picked
+                boolean picked=false;
+                if(t>=nums[i]){
+                    picked=dp[t-nums[i]];
+                }
+                //not picked
+                boolean notPicked=dp[t];
+                curr[t]=picked||notPicked;
+            }
+            dp=curr;
+        }
+        return dp[target];
 
     }
 }
