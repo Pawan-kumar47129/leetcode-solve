@@ -31,7 +31,7 @@ class Solution {
                         visited[ele]=true;
                     }
                 }
-                indexMap.remove(nums[index]);
+                indexMap.remove(nums[index]);//remove because next time not run again becuase we already pushed all same element in queue   
             }
             steps++;
         }
