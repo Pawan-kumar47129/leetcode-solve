@@ -3,7 +3,6 @@ class Solution {
         int div=n/m;
         long totalSum=n*(n+1)/2L;
         long divisibleSum=div*(2*m + (div-1)*m)/2;
-        System.out.println(divisibleSum);
         long notDivisibleSum=totalSum-divisibleSum;
         return (int)(notDivisibleSum-divisibleSum);
     }
