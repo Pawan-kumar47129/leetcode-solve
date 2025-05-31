@@ -1,3 +1,5 @@
+//TC=O(N) SC=O(N)
+/*
 class Solution {
     public int partitionDisjoint(int[] nums) {
         int n = nums.length;
@@ -12,5 +14,24 @@ class Solution {
             leftMax=Math.max(leftMax,nums[i]);
         }
         return -1;
+    }
+}*/
+
+//two pointer
+class Solution {
+    public int partitionDisjoint(int[] nums) {
+        int n = nums.length;
+        int length=1;
+        int currMax=nums[0];
+        int possibleMax=nums[0];
+        for(int i=1;i<n;i++){
+            if(nums[i]<currMax){
+                length=i+1;
+                currMax=possibleMax;
+            }else{
+                possibleMax=Math.max(possibleMax,nums[i]);
+            }
+        }
+        return length;
     }
 }
