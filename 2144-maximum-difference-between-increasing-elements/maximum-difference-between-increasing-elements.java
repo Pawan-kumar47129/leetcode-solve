@@ -1,3 +1,4 @@
+/*
 class Solution {
     public int maximumDifference(int[] nums) {
         int n=nums.length;
@@ -11,6 +12,21 @@ class Solution {
             if(nums[i]<rightMax[i+1]){
                 ans=Math.max(ans,rightMax[i+1]-nums[i]);
             }
+        }
+        return ans;
+    }
+}*/
+
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int n=nums.length;
+        int ans=-1;
+        int min=nums[0];
+        for(int i=1;i<n;i++){
+            if(min<nums[i]){
+                ans=Math.max(ans,nums[i]-min);
+            }
+            min=Math.min(min,nums[i]);
         }
         return ans;
     }
