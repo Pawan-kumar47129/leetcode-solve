@@ -29,7 +29,7 @@
 }*/
 
 //tabulation
-class Solution {
+/*class Solution {
     public boolean isMatch(String s, String p) {
         int n=s.length();
         int m=p.length();
@@ -46,7 +46,7 @@ class Solution {
                     dp[i][j]=dp[i-1][j-1];
                 }else if(p.charAt(j-1)=='*'){
                     if(s.charAt(i-1)==p.charAt(j-2) || p.charAt(j-2)=='.'){
-                        dp[i][j]=dp[i][j-2]|| dp[i-1][j];//completely skill two character or matching with p.charAt(j-2) multiple time
+                        dp[i][j]=dp[i][j-2] || dp[i-1][j];//completely skill two character or matching with p.charAt(j-2) multiple time
                     }else{
                         dp[i][j]=dp[i][j-2];//not matching then skip the both any* any can be . or character
                     }
@@ -54,5 +54,36 @@ class Solution {
             }
         }
         return dp[n][m];
+    }
+}*/
+
+//space optimization
+class Solution {
+    public boolean isMatch(String s, String p) {
+        int n=s.length();
+        int m=p.length();
+        boolean[]dp=new boolean[m+1];
+        dp[0]=true;
+        for (int j = 2; j <= m; j++) {
+            if (p.charAt(j - 1) == '*' && dp[j - 2]) {
+                dp[j] = true;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            boolean[]curr=new boolean[m+1];
+            for(int j=1;j<=m;j++){
+                if(s.charAt(i-1)==p.charAt(j-1) || p.charAt(j-1)=='.'){
+                    curr[j]=dp[j-1];
+                }else if(p.charAt(j-1)=='*'){
+                    if(s.charAt(i-1)==p.charAt(j-2) || p.charAt(j-2)=='.'){
+                        curr[j]=curr[j-2] || dp[j];//completely skill two character or matching with p.charAt(j-2) multiple time
+                    }else{
+                        curr[j]=curr[j-2];//not matching then skip the both any* any can be . or character
+                    }
+                }else curr[j]=false;
+            }
+            dp=curr;
+        }
+        return dp[m];
     }
 }
