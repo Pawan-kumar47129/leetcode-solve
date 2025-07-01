@@ -2,13 +2,14 @@ class Solution {
     public List<String> partitionString(String s) {
         HashSet<String>seen=new HashSet<>();
         List<String>ans=new ArrayList<>();
-        String currSeg="";
+        StringBuilder  currSeg=new StringBuilder();
         for(int i=0;i<s.length();i++){
-            currSeg+=s.charAt(i);
-            if(!seen.contains(currSeg)){
-                ans.add(currSeg);
-                seen.add(currSeg);
-                currSeg="";
+            currSeg.append(s.charAt(i));
+            String seg=currSeg.toString();
+            if(!seen.contains(seg)){
+                ans.add(seg);
+                seen.add(seg);
+                currSeg=new StringBuilder();
             }
         }
         return ans;
