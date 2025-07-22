@@ -8,7 +8,9 @@ class Solution {
             map.put(nums[right],map.getOrDefault(nums[right],0)+1);
             currSum+=nums[right];
             while(map.get(nums[right])>1){
-                map.put(nums[left],map.get(nums[left])-1);
+                int freq=map.get(nums[left]);
+                if(freq==1) map.remove(nums[left]);
+                else map.put(nums[left],1);
                 currSum-=nums[left];
                 left++;
             }
