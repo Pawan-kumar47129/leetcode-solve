@@ -6,7 +6,6 @@ class Solution {
         Arrays.fill(dist,(int)1e6);
         dist[src]=0;
         queue.add(src);
-        int steps=0;
         while(!queue.isEmpty()){
             int node=queue.poll();
             int nextDist=dist[node]+1;
