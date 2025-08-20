@@ -38,10 +38,6 @@ class Solution {
                 int dig=dp[i+1][j+1];
                 int down=dp[i+1][j];
                 dp[i][j]=1+ Math.min(right,Math.min(dig,down));
-            }
-        }
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
                 result+=dp[i][j];
             }
         }
