@@ -7,6 +7,7 @@ WHERE l1.id =l2.id-1 and l2.id = l3.id-1
 */
 
 #2nd ways
+/*
 with laggedLogs as(
     SELECT 
         num,
@@ -17,3 +18,9 @@ with laggedLogs as(
 SELECT distinct(num) as ConsecutiveNums
 FROM laggedLogs
 WHERE num=prev1 and num=prev2;
+*/
+
+SELECT distinct(l1.num) as ConsecutiveNums
+FROM logs l1
+JOIN logs l2 ON l1.id=l2.id-1 and l1.num=l2.num
+JOIN logs l3 ON l2.id=l3.id-1 and l2.num=l3.num;
