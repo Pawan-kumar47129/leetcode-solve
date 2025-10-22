@@ -1,14 +1,10 @@
 class Solution {
-    public int finalValueAfterOperations(String[] operations) {
-        Map<String,Integer>map=Map.of(
-            "++X",1,
-            "--X",-1,
-            "X++",1,
-            "X--",-1
-            );
+    public int finalValueAfterOperations(String[] op) {
         int x=0;    
-        for(int i=0;i<operations.length;i++){
-            x+=map.get(operations[i]);
+        for(int i=0;i<op.length;i++){
+            if(op[i].equals("++X") || op[i].equals("X++")){
+                x++;
+            }else x--;
         }
         return x;
     }
