@@ -1,18 +1,16 @@
 # Write your MySQL query statement below
-WITH first_logins as (
-    SELECT player_id, min(event_date) as first_login
-    FROM Activity
+WITH first_login as(
+    SELECT player_id ,min(event_date) as first_play
+    FROM Activity 
     GROUP BY player_id
-), consec_logins AS(
-    SELECT COUNT(F.player_id) as num_logins
-    FROM 
-        first_logins F
-        INNER JOIN Activity A 
-        ON F.player_id=A.player_id
-        AND F.first_login=DATE_SUB(A.event_date,INTERVAL 1 DAY) 
-) 
+),second_login as(
+    SELECT count(A1.player_id)as total_num_log
+    FROM first_login  A1
+    INNER JOIN Activity A2
+    ON A1.player_id=A2.player_id
+    AND A1.first_play=DATE_SUB(A2.event_date,INTERVAL 1 DAY)
+)
 SELECT 
-    ROUND(
-        (SELECT C.num_logins from consec_logins C)
-        / (SELECT COUNT(F.player_id) from first_logins F)
-    ,2) as fraction;      
+    round((SELECT total_num_log from second_login)
+    /(SELECT count(DISTINCT(player_id)) from Activity)
+    ,2) as fraction;
